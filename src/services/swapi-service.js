@@ -1,5 +1,6 @@
+import { extractId } from "../utils/utils";
 class SwapiService {
-    _apiBase = "https://www.swapi.tech/api/";
+    _apiBase = "https://swapi.dev/api/";
 
     getResource = async (url) => {
         const response = await fetch(url);
@@ -20,7 +21,7 @@ class SwapiService {
         const response = await this.getResource(
             `${this._apiBase}people/${id}/`
         );
-        return response.result.properties;
+        return this._transformPeople(response);
     };
 
     getAllPlanets = async () => {
@@ -32,7 +33,7 @@ class SwapiService {
         const response = await this.getResource(
             `${this._apiBase}planets/${id}/`
         );
-        return this._transformPlanet(response.result);
+        return this._transformPlanet(response);
     };
 
     getAllStarships = async () => {
@@ -47,13 +48,23 @@ class SwapiService {
         return response.result.properties;
     };
 
-    _transformPlanet = ({ uid, properties }) => {
+    _transformPlanet = (planet) => {
         return {
-            id: uid,
-            diameter: properties.diameter,
-            name: properties.name,
-            population: properties.population,
-            rotationPeriod: properties.rotation_period,
+            id: extractId(planet),
+            diameter: planet.diameter,
+            name: planet.name,
+            population: planet.population,
+            rotationPeriod: planet.rotation_period,
+        };
+    };
+
+    _transformPeople = (people) => {
+        return {
+            id: extractId(people),
+            diameter: people.diameter,
+            name: people.name,
+            population: people.population,
+            rotationPeriod: people.rotation_period,
         };
     };
 }
