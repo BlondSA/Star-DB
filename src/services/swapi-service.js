@@ -1,4 +1,3 @@
-import { extractId } from "../utils/utils";
 class SwapiService {
     _apiBase = "https://swapi.dev/api/";
 
@@ -14,19 +13,21 @@ class SwapiService {
 
     getAllPeople = async () => {
         const response = await this.getResource(`${this._apiBase}people/`);
-        return response.results;
+        return response.results.map(this._transformPeople);
     };
 
     getPerson = async (id) => {
         const response = await this.getResource(
             `${this._apiBase}people/${id}/`
         );
+        // console.log(response);
         return this._transformPeople(response);
     };
 
     getAllPlanets = async () => {
         const response = await this.getResource(`${this._apiBase}planets/`);
-        return response.results;
+        console.log(response);
+        return response.results.map(this._transformPlanet);
     };
 
     getPlanet = async (id) => {
@@ -48,9 +49,15 @@ class SwapiService {
         return response.result.properties;
     };
 
+    _extractId = (item) => {
+        const idRegExp = /\/([0-9]*)\/$/;
+        // console.log(item.url.match(idRegExp));
+        return item.url.match(idRegExp)[1];
+    };
+
     _transformPlanet = (planet) => {
         return {
-            id: extractId(planet),
+            id: this._extractId(planet),
             diameter: planet.diameter,
             name: planet.name,
             population: planet.population,
@@ -60,11 +67,11 @@ class SwapiService {
 
     _transformPeople = (people) => {
         return {
-            id: extractId(people),
-            diameter: people.diameter,
+            id: this._extractId(people),
             name: people.name,
-            population: people.population,
-            rotationPeriod: people.rotation_period,
+            gender: people.gender,
+            birthDate: people.birth_year,
+            eyeColor: people.eye_color,
         };
     };
 }

@@ -1,3 +1,3 @@
-import ErrorIndicator from './error-indicator';
+import ErrorMessage from "./error-message";
 
-export default ErrorIndicator;
+export default ErrorMessage;

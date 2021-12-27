@@ -3,11 +3,10 @@ import SwapiService from "../../services/swapi-service";
 import "./item-list.css";
 import Spinner from "./../spinner/spinner";
 import ErrorMessage from "../error-message/error-message";
-import { extractId } from "../../utils/utils";
 
 export default class ItemList extends Component {
     state = {
-        peopleList: null,
+        peopleList: {},
         error: false,
         loading: true,
     };
@@ -20,10 +19,6 @@ export default class ItemList extends Component {
 
     onPeopleLoaded = (peopleList) => {
         this.setState({ peopleList: peopleList, loading: false, error: false });
-    };
-
-    onLoad = () => {
-        this.setState({ loading: true });
     };
 
     onError = () => {
@@ -39,10 +34,16 @@ export default class ItemList extends Component {
 
     render() {
         const { peopleList, loading, error } = this.state;
+        const { onItemSelected } = this.props;
         const spinner = loading ? <Spinner /> : null;
         const errorMessage = error ? <ErrorMessage /> : null;
         const content =
-            !loading && !error ? <ContentView peopleList={peopleList} /> : null;
+            !loading && !error ? (
+                <ContentView
+                    peopleList={peopleList}
+                    onItemSelected={onItemSelected}
+                />
+            ) : null;
         return (
             <ul className="item-list list-group">
                 {spinner}
@@ -54,12 +55,16 @@ export default class ItemList extends Component {
 }
 
 const ContentView = (props) => {
-    const { peopleList } = props;
+    const { peopleList, onItemSelected } = props;
     return peopleList.map((person) => {
-        const idPerson = extractId(person);
+        const { name, id } = person;
         return (
-            <li className="list-group-item" key={idPerson}>
-                {person.name}
+            <li
+                className="list-group-item"
+                key={id}
+                onClick={() => onItemSelected(id)}
+            >
+                {name}
             </li>
         );
     });
