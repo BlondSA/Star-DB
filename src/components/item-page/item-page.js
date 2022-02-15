@@ -3,7 +3,7 @@ import "./item-page.css";
 import ItemList from "../item-list";
 import PersonDetails from "../person-details";
 import SwapiService from "../../services/swapi-service";
-import Row from "../UI/row";
+import Row from "../row/";
 import ErrorBoundary from "../error-boundary/";
 
 export default class ItemPage extends Component {

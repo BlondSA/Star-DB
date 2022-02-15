@@ -1,12 +1,6 @@
 import React from "react";
 import ItemList from "../item-list";
-import { withData, withSwapiService } from "../hoc-helpers";
-
-const withChildFunction = (fn) => (Wrapped) => {
-    return (props) => {
-        return <Wrapped {...props}>{fn}</Wrapped>;
-    };
-};
+import { withChildFunction, withData, withSwapiService } from "../hoc-helpers";
 
 const renderName = (item) => {
     return <span>{item.name}</span>;

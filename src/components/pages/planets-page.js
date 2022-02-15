@@ -1,5 +1,5 @@
 import React from "react";
-import Row from "../UI/row";
+import Row from "../row/";
 import { PlanetDetails, PlanetList } from "../sw-components";
 
 class PlanetsPage extends React.Component {

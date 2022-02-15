@@ -1,5 +1,5 @@
 import React from "react";
-import Row from "../UI/row";
+import Row from "../row/";
 import { StarshipDetails } from "../sw-components";
 import { StarshipList } from "../sw-components";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import Row from "../UI/row";
+import Row from "../row/";
 import { PersonDetails, PersonList } from "../sw-components";
 
 class PeoplePage extends React.Component {
