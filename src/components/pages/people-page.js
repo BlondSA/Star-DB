@@ -2,22 +2,22 @@ import React from "react";
 import Row from "../row/";
 import { PersonDetails, PersonList } from "../sw-components";
 
-class PeoplePage extends React.Component {
-    state = { selectedItem: null };
+const PeoplePage = (props) => {
+	const { match, history } = props;
+	const { id } = match.params;
 
-    onItemSelected = (id) => {
-        this.setState({ selectedItem: id });
-    };
-
-    render() {
-        const { selectedItem } = this.state;
-        return (
-            <Row
-                left={<PersonList onItemSelected={this.onItemSelected} />}
-                right={<PersonDetails selectedId={selectedItem} />}
-            />
-        );
-    }
-}
+	return (
+		<Row
+			left={
+				<PersonList
+					onItemSelected={(idItem) => {
+						history.push(idItem);
+					}}
+				/>
+			}
+			right={<PersonDetails selectedId={id} />}
+		/>
+	);
+};
 
 export default PeoplePage;
